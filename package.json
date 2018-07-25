@@ -1,6 +1,6 @@
 {
   "name": "funk.ts",
-  "version": "1.0.0",
+  "version": "0.0.0",
   "description": "Not funky, even not functional.",
   "main": "src/funk.ts",
   "types": "src/funk.ts",

@@ -1,4 +1,12 @@
+// operator
 import { eq, gt, lt, ge, le } from './porter'
+// isType
+import { isArray, isFunction, isNumber, isString } from './porter'
+// array
+import { head, tail, init, index, map, nums, last, reverse } from './porter'
+// object
+import { named, template } from './porter'
+
 
 /**
  * @todo [x] placeholder
@@ -10,10 +18,13 @@ import { eq, gt, lt, ge, le } from './porter'
  *           [x] reverse
  *           [x] map
  *           [ ] filter
- *           [x] reduce
- *       [ ] operator
+ *           [ ] reduce
+ *       [x] operator
  *           [x] === > < >= <=
- *           [x] prop
+ *       [ ] object
+ *           [ ] proped
+ *           [x] named
+ *           [ ] prop
  *           [x] template
  *       [x] tracer
  *       [x] assert
@@ -30,43 +41,123 @@ import { eq, gt, lt, ge, le } from './porter'
  */
 export class F {
     public static _ = 'F.PLA4HOLD2'
-    /** eq :: n -> n -> boolean */
+    /**
+     * @sig eq :: a -> a -> boolean
+     * @alias is
+     */
     public static eq = eq
+    public static is = eq
+
+    /**
+     * @sig gt :: a -> a -> boolean
+     */
     public static gt = gt
+
+    /**
+     * @sig lt :: a -> a -> boolean
+     */
     public static lt = lt
+
+    /**
+     * @sig ge :: a -> a -> boolean
+     */
     public static ge = ge
+
+    /**
+     * @sig le :: a -> a -> boolean
+     */
     public static le = le
+
     public static op = { eq, gt, lt, ge, le }
-    public static is = F.eq
-    /** index :: [a] -> a */
-    // public static index = index
-    /** head :: [a] -> a */
-    // public static head = head
-    // public static car = head
-    /** tail :: [a] -> [a] */
-    // public static tail = tail
-    // public static cdr = tail
-    /** last :: [a] -> a */
-    // public static last = last
-    // public static init = init
-    /** nums :: n -> [n] @return [0, 1 .. n - 1] */
-    // public static nums = nums
-    /** map :: (a -> b) -> [a] -> [b] */
-    // public static map = map
+
+    /**
+     * @sig index :: [a] -> a
+     */
+    public static index = index
+
+    /**
+     * @sig head :: [a] -> a
+     * @alias car
+     */
+    public static head = head
+    public static car = head
+
+    /**
+     * @sig tail :: [a] -> [a]
+     * @alias cdr
+     */
+    public static tail = tail
+    public static cdr = tail
+
+    /**
+     * @sig last :: [a] -> a
+     */
+    public static last = last
+
+    /**
+     * @sig init :: [a] -> [a]
+     */
+    public static init = init
+
+    /**
+     * @sig nums :: n -> [n]
+     * @example
+     *   const a0 = nums(0) // []
+     *   const a1 = nums(1) // [0]
+     *   const a3 = nums(3) // [0, 1, 2]
+     */
+    public static nums = nums
+
+    /**
+     * @sig map :: (a -> b) -> [a] -> [b]
+     */
+    public static map = map
+
+    /**
+     * @sig reverse :: (s -> s) | ([a] -> [a])
+     */
+    public static reverse = reverse
+
     /** reduce :: (b -> a -> b) -> a -> b */
     // public static reduce = reduce
-    /** isString :: a -> boolean */
-    // public static isString = isString
-    /** isFunction :: (a -> b) -> boolean */
-    // public static isFunction = isFunction
-    /** isArray :: [a] -> boolean */
-    // public static isArray = isArray
-    /** isN :: n -> boolean */
-    // public static isN = isN
-    /** reverse :: (s -> s) | ([a] -> [a]) */
-    // public static reverse = reverse
-    /** template :: [a] -> [b] -> c */
-    // public static template = template
+
+    /**
+     * @sig isString :: a -> boolean
+     * @alias isS
+     */
+    public static isString = isString
+    public static isS = isString
+
+    /**
+     * @sig isFunction :: (a -> b) -> boolean
+     * @alias isFN
+     */
+    public static isFunction = isFunction
+    public static isFN = isFunction
+
+    /**
+     * @sig isArray :: [a] -> boolean
+     * @alias isL
+     */
+    public static isArray = isArray
+    public static isL = isArray
+
+    /**
+     * @sig isN :: n -> boolean
+     * @alias isN
+     */
+    public static isNumber = isNumber
+    public static isN = isNumber
+
+    /**
+     * @sig named :: (a, b) -> a
+     */
+    public static named = named
+
+    /**
+     * @sig template :: [a] -> [b] -> c
+     */
+    public static template = template
     /** prop :: a -> b -> c */
     // public static prop = prop
 

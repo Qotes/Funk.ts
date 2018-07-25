@@ -4,6 +4,7 @@
  */
 export const named = (o: object, value: string) => Object.defineProperty(o, 'name', { value })
 
+
 /**
  * @desc Set the property of an object forcely
  * @see prop
@@ -11,9 +12,15 @@ export const named = (o: object, value: string) => Object.defineProperty(o, 'nam
  */
 export const proped = () => {}
 
+
 /**
  * @desc Get the property of an object forcely
  * @see proped
  * @todo
  */
 export const prop = () => {}
+
+
+export function template (...keys: string[]) {
+    return (...values: any[]) => keys.reduce((obj, key, i) => Object.assign(obj, {[key]: values[i]}), {})
+}
