@@ -1,4 +1,4 @@
-import { curry } from './curry'
+import { curry, curry3 } from './curry'
 
 interface IOp extends FN<boolean> {
     optag: string
@@ -35,3 +35,16 @@ export const _le = curry(function le (m: any, n: any) {
     (le as any).optag = '<='
     return m <= n
 }) as IOp
+
+
+/**
+ * @example
+ *   const n2 = 10
+ *   const eq10 = checkN(n2, eq)
+ *   const r = eq10(7) // boolean
+ */
+export const _checkN = curry3(function checkN (n: number, op: IOp, m: number) {
+    return op(n, m)
+})
+
+// TODO: Math...

@@ -33,40 +33,77 @@ interface Curried2<T1, T2, R> {
     (t1: T1, t2: T2): Curried0<R>
 }
 
+interface Curried3<T1, T2, T3, R> {
+    (t1: T1): Curried2<T2, T3, R>
+    (t1: T1, t2: T2): Curried1<T3, R>
+    (t1: T1, t2: T2, t3: T3): Curried0<R>
+}
+
+const ArgsError = (name: string) => `The curried ${name} expects at leat 1 arguments, found 0.`
+
+
 function curry0<R> (r: R): Curried0<R> {
     return r
 }
 
+
 function curry1 <T1, R> (f: (t1: T1) => R): Curried1<T1, R> {
     function curried (t1: T1): Curried0<R> {
-        return curry0(f(t1))
-    }
-    return curried
-}
-
-function curry2 <T1, T2, R> (f: (t1: T1, t2: T2) => R): Curried2<T1, T2, R> {
-    function curried (t1: T1): Curried1<T2, R>
-    function curried (t1: T1, t2: T2): Curried0<R>
-    function curried (t1: T1, t2?: T2) {
         switch (arguments.length) {
-            case 1:
-                return curry1((t22: T2): R => f(t1, t22))
-            default:
-                return curry0(f(t1, t2 as T2))
+            case 0: throw Error(ArgsError(f.name))
+            default: return curry0(f(t1))
         }
     }
     return named(curried, f.name)
 }
 
-// TODO: common curryN with type inteligence
+
+export function curry2 <T1, T2, R> (f: (t1: T1, t2: T2) => R): Curried2<T1, T2, R> {
+    function curried (t1: T1): Curried1<T2, R>
+    function curried (t1: T1, t2: T2): Curried0<R>
+    function curried (t1: T1, t2?: T2) {
+        switch (arguments.length) {
+            case 0: throw Error(ArgsError(f.name))
+            case 1: return curry1((t22: T2): R => f(t1, t22))
+            default: return curry0(f(t1, t2 as T2))
+        }
+    }
+    return named(curried, f.name)
+}
+
+
+export function curry3 <T1, T2, T3, R> (f: (t1: T1, t2: T2, t3: T3) => R): Curried3<T1, T2, T3, R> {
+    function curried (t1: T1): Curried2<T2, T3, R>
+    function curried (t1: T1, t2: T2): Curried1<T3, R>
+    function curried (t1: T1, t2: T2, t3: T3): Curried0<R>
+    function curried (t1: T1, t2?: T2, t3?: T3) {
+        switch (arguments.length) {
+            case 0: throw Error(ArgsError(f.name))
+            case 1: return curry2((t22: T2, t32: T3) => f(t1, t22, t32))
+            case 2: return curry1((t32: T3) => f(t1, t2 as T2, t32))
+            default: return curry0(f(t1, t2 as T2, t3 as T3))
+        }
+    }
+    return named(curried, f.name)
+}
+
+
 // function curryN <T1, R> (f: (t1: T1) => R): Curried1<T1, R>
 // function curryN <T1, T2, R> (f: (t1: T1, t2: T2) => R): Curried2<T1, T2, R>
 // function curryN <T1, T2, T3, R> (f: (t1: T1, t2: T2, t3: T3) => R): Curried3<T1, T2, T3, R>
-// function curryN <T1, T2, T3, T4, R> (f: (t1: T1, t2: T2, t3: T3, t4: T4) => R): Curried4<T1, T2, T3, T4, R>
-// function curryN <T1, T2, T3, T4, T5, R> (f: (t1: T1, t2: T2, t3: T3, t4: T4, t5: T5) => R): Curried5<T1, T2, T3, T4, T5, R>
-// function curryN <T, R> (f: (...args: T[]) => R) {
-//     //
+// function curryN <R> (f: (...args: any[]) => R) {
+//     const arity = f.length
+//     const curried: FN<R> = (...args: any[]) => {
+//         curried.partially = this && this.partially
+
+//         return args.length < arity
+//           ? named(f.name, curried.bind({ partially: true }, ...args))
+//           : f.call(this || { partially: false }, ...args)
+//     }
+//     return named(curried, f.name)
 // }
+
+
 // export const curry = curryN
 
 export const curry = curry2
