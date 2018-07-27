@@ -131,15 +131,35 @@ export class F {
     /** @alias isNumber */
     public static isN = isNumber
 
+
     /**
-     * @sig named :: (a, b) -> a
+     * @desc Forcely set the name of an object
+     * @impure
+     * @deprecated You may don't need it
+     * @example
+     *    const namedJunky = named('junky')
+     *    const fnJunky = namedJunky((a) => a + 1)
+     *    const arrJunky = namedJunky([1, 2, 3])
      */
     public static named = named
 
+
     /**
-     * @sig template :: [a] -> [b] -> c
+     * @desc literal object template
+     *       It just supports a light way to compose objects, nothing more.
+     *       But it may help when you don't want to implement an interface with a class.
+     * @example
+     *    const person = template(['name', 'hobbies'])
+     *    const john = person('John', ['cycling', 'reading', 'coding'])
+     *    // it turns out {
+     *    //   name: 'John',
+     *    //   hobbies: ['cycling', 'reading', 'coding']
+     *    // }
+     *    const johnJunior = template(john)('John.Jr', ['anime'])
+     *    // though you can use an object as template, but it's unsafe and deprecated
      */
     public static template = template
+
 
     /**
      * @example
@@ -153,6 +173,7 @@ export class F {
      */
     public static prop = prop
 
+
     /**
      * placeholder replacer, reverser for function params
      * the placeholder has to be the first or last param of the function
@@ -161,6 +182,7 @@ export class F {
      *     f(5) // true
      */
     public static replace = replace
+
 
     /**
      * @example n = 2, o = F.op.lt
@@ -172,6 +194,7 @@ export class F {
     // public static checkN = checkN
 
     // public static checkArgsN = checkArgsN
+
 
     /**
      * @desc Composes a function runs from right to left and keep the callees
