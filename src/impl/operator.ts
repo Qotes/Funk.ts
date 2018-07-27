@@ -1,40 +1,32 @@
-import { curry, curry3 } from './curry'
+import { curry, curry3, named, proped } from 'src/porter'
 
-interface IOp extends FN<boolean> {
+interface IOp {
     optag: string
-    <T> (m: T): FN<boolean>
+    <T> (m: T): FN1<T, boolean>
     <T> (m: T, n: T): boolean
 }
 
+const optaged = proped('optag')
 
-export const _eq = curry(function eq (m: any, n: any) {
-    (eq as any).optag = '==='
-    return m === n
-}) as IOp
+const OP = (name: string, optag: string, impl: FN) => named(name)(optaged(optag)(curry(impl))) as IOp
 
 
-export const _gt = curry(function gt (m: any, n: any) {
-    (gt as any).optag = '>'
-    return m > n
-}) as IOp
+export const eq = OP('eq', '===', (m: any, n: any) => m === n)
 
 
-export const _lt = curry(function lt (m: any, n: any) {
-    (lt as any).optag = '<'
-    return m < n
-}) as IOp
+export const ne = OP('ne', '!==', (m: any, n: any) => m !== n)
 
 
-export const _ge = curry(function ge (m: any, n: any) {
-    (ge as any).optag = '>='
-    return m >= n
-}) as IOp
+export const gt = OP('gt', '>', (m: any, n: any) => m > n)
 
 
-export const _le = curry(function le (m: any, n: any) {
-    (le as any).optag = '<='
-    return m <= n
-}) as IOp
+export const lt = OP('lt', '<', (m: any, n: any) => m < n)
+
+
+export const ge = OP('ge', '>=', (m: any, n: any) => m >= n)
+
+
+export const le = OP('le', '<=', (m: any, n: any) => m <= n)
 
 
 /**
@@ -48,3 +40,17 @@ export const _checkN = curry3(function checkN (n: number, op: IOp, m: number) {
 })
 
 // TODO: Math...
+// + - * /
+// incr, decr
+// whether, ternary
+export const trunc = named('trunc')((n: number) => n | 0)
+
+
+export const whether = named('whether')((x: any) => !!x)
+
+/**
+ * @todo
+ */
+export const _ternary = curry3(function ternary (x: any, l: any, r: any) {
+    return !!x ? l : r
+})

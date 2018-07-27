@@ -60,3 +60,6 @@ export function reverse<T> (it: T[] | string) {
 //     ? (arguments.length === 3 ? l.reduce<R>(fn, iV) : l.reduce(fn as any)) as R
 //     : (l2: T[]) => l2.reduce(fn as any)
 // }
+
+
+// TODO: filter

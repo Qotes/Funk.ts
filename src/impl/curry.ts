@@ -54,7 +54,7 @@ function curry1 <T1, R> (f: (t1: T1) => R): Curried1<T1, R> {
             default: return curry0(f(t1))
         }
     }
-    return named(curried, f.name)
+    return named(f.name, curried)
 }
 
 
@@ -68,7 +68,7 @@ export function curry2 <T1, T2, R> (f: (t1: T1, t2: T2) => R): Curried2<T1, T2, 
             default: return curry0(f(t1, t2 as T2))
         }
     }
-    return named(curried, f.name)
+    return named(f.name, curried)
 }
 
 
@@ -84,7 +84,7 @@ export function curry3 <T1, T2, T3, R> (f: (t1: T1, t2: T2, t3: T3) => R): Curri
             default: return curry0(f(t1, t2 as T2, t3 as T3))
         }
     }
-    return named(curried, f.name)
+    return named(f.name, curried)
 }
 
 
