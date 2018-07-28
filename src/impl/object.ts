@@ -1,4 +1,4 @@
-import { curry, curry3, isArray } from 'src/porter'
+import { curry, curry3, isArray, isFunction, isObject } from 'src/porter'
 
 
 /**
@@ -20,7 +20,9 @@ export const proped = curry3((attr: string, value: any, o: object) =>
  * @raw
  * @sig named :: b -> a -> a
  * @internal
+ * @impure
  * @desc Change the name of an object forcely
+ *       Be care that the named object is the same object inserted
  *       It could be used to keep the trace of callstack or check identities
  * @warn it's used by curry, so don't curry it with curry or functions curried
  *       like `const named = proped('name')` as `proped` is curried
@@ -35,6 +37,32 @@ export const named = ((value: string, o?: object) => o === undefined
 
 
 /**
+ * @raw
+ * @sig alias :: b -> a -> a
+ * @internal
+ * @see named
+ * @desc Produce a new object of an object with an alias
+ *       The returned object is a whole new object, which differs from named
+ *       It could be used to keep the trace of callstack or check identities
+ * @warn it's used by curry, so don't curry it with curry or functions curried
+ *       like `const named = proped('name')` as `proped` is curried
+ */
+export function alias (value: string): <T>(o: T) => T
+export function alias <T> (value: string, o: T): T
+export function alias (value: string, o?: any) {
+    // TODO: check zero params
+    const _alias = (oo: any) => {
+        if (!isObject(oo)) throw Error(`[alias]: no proper way to give an alias for non-object ${oo}`)
+        if (isFunction(oo)) return named(value)(oo.bind({}))
+        return named(value)(oo)
+    }
+
+    if (arguments.length === 1) return named('alias')(_alias)
+    return _alias(o)
+}
+
+
+/**
  * @sig prop :: a -> b -> c
  * @desc Get the property of an object
  *       The lookup types are not campable of getting a never-like property
@@ -43,9 +71,7 @@ export const named = ((value: string, o?: object) => o === undefined
  * @see proped
  * @todo monad: Maybe
  */
-export const _prop = curry(function prop (attr: string, obj: object) {
-    return obj[attr]
-}) as /** @interface */ {
+export const prop = named('prop')(curry((attr: string, obj: object) => obj[attr])) as /** @interface */ {
     <T, K extends keyof T>(attr: K, obj: T): T[K]
     <R>(attr: string): (obj: any) => R | undefined
 }

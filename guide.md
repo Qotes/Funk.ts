@@ -37,7 +37,15 @@ Internal functions marked `@raw` are __forbidden__ to import other functions.
 
 Even not marked as raw, internal functions may only import functions that's quite focus and persistent. e.g. you may import `curry` because whatever we do to it, it just do what it's suppoed to do, but use proped is deprecated as the param orders might be changed in future.
 
+## generics
+
+I sincerely do believe that using more than 3 params is a bad practice. So I'm not going to write generic overloads for functions more than 3 params, they will just go as rests. I even considered to forcely accept not more than 3 params for every functions of this library, but gaved up as somehow I think it's not a library but looks like a weird dialect of Typescript.
+
 ## TODO
+
+NOTE: There's no need to hurry to implement some of the methods, focus more on reusable tools than common helpers.d
+
+params number check
 
 arity
 
