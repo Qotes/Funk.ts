@@ -6,30 +6,36 @@ import { curry, curry3, isArray, isFunction, isObject } from 'src/porter'
  * @see prop
  */
 export const proped = curry3((attr: string, value: any, o: object) =>
-  Object.defineProperty(o, attr, { value })) as /** @interface */ {
-      (attr: string): {
-        <T>(value: any, o: T): T
-        (value: any): <T>(o: T) => T
-      }
-      (attr: string, value: any): <T>(o: T) => T
-      <T>(attr: string, value: any, o: T): T
-  }
+    Object.defineProperty(o, attr, { value })) as /** @interface */ {
+        (attr: string): {
+            <T>(value: any, o: T): T
+            (value: any): <T>(o: T) => T
+        }
+        (attr: string, value: any): <T>(o: T) => T
+        <T>(attr: string, value: any, o: T): T
+    }
 
 
 /**
  * @raw
  * @sig named :: b -> a -> a
  * @internal
- * @impure
+ * @impure / actually pure
+ * @warn it's used by curry, so don't curry it with curry or functions curried
+ *       like `const named = proped('name')` as `proped` is curried
  * @desc Change the name of an object forcely
  *       Be care that the named object is the same object inserted
  *       It could be used to keep the trace of callstack or check identities
- * @warn it's used by curry, so don't curry it with curry or functions curried
- *       like `const named = proped('name')` as `proped` is curried
+ *       It's useful for composed or curried functions as anonymous functions
+ *       are processed before implictly named
+ * @example
+ *       const f1 = x => x                      // f1.name = 'f1'
+ *       const f2 = f1(x => x)                  // f2.name = ''
+ *       const f3 = named('f3')(f2(f1(x => x))) // f3.name = 'f3'
  */
 export const named = ((value: string, o?: object) => o === undefined
-  ? (oo: object) => Object.defineProperty(oo, 'name', { value })
-  : Object.defineProperty(o, 'name', { value })
+    ? (oo: object) => Object.defineProperty(oo, 'name', { value })
+    : Object.defineProperty(o, 'name', { value })
 ) as /** @interface */ {
     <T>(value: string, o: T): T
     (value: string): <T>(o: T) => T
@@ -84,5 +90,5 @@ export const prop = named('prop')(curry((attr: string, obj: object) => obj[attr]
 export function template (keys: string[]): (...values: any[]) => object
 export function template<T = object> (parent: T): (...values: any[]) => T
 export function template (keys: string[] | object) {
-    return (...values: any[]) => (isArray(keys) ? keys : Object.keys(keys)).reduce((obj, key, i) => Object.assign(obj, {[key]: values[i]}), {})
+    return (...values: any[]) => (isArray(keys) ? keys : Object.keys(keys)).reduce((obj, key, i) => Object.assign(obj, { [key]: values[i] }), {})
 }
