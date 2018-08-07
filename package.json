@@ -27,6 +27,6 @@
   "homepage": "https://github.com/Qotes/Funk.ts#readme",
   "devDependencies": {
     "tslint-config-prettier": "^1.14.0",
-    "typescript": "^2.9.2"
+    "typescript": "^3.0.1"
   }
 }
