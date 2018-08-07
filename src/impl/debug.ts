@@ -1,17 +1,34 @@
+import { checkN } from 'src/porter'
+import { IOp } from './operator'
 
 // trace
 
 // logger
 
-// entag
 
-// export function checkArgsN(f: FN, n: number = 1, op: valueof<typeof F.op> = F.op.eq) {
-//     const tagMap = {
-//         '===': 'absolutely',
-//         '>': 'more than',
-//         '<': 'less than',
-//         '>=': 'at least',
-//         '<=': 'at most'
-//     }
-//     if (!F.checkN(f.length, op)(n)) throw new Error(`${f.name} expects ${tagMap[(op as FN).optag] || ''} ${n} argument${n > 1 ? 's' : ''}, found ${f.length}.`)
-// }
+/**
+ * @internal
+ * @impure
+ */
+export function checkArgsN (f: FN, n: number = 1, op: IOp) {
+    const tagMap = {
+        '===': 'absolutely',
+        '>': 'more than',
+        '<': 'less than',
+        '>=': 'at least',
+        '<=': 'at most'
+    }
+    assert(
+        checkN(f.length, op, n),
+        `${f.name} expects ${tagMap[op.optag] || ''} ${n} argument${n > 1 ? 's' : ''}, found ${f.length}.`
+    )
+}
+
+
+/**
+ * @internal
+ * @impure
+ */
+export function assert (cond: boolean, msg: string) {
+    if (!cond) throw Error(msg)
+}

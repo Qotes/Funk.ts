@@ -1,21 +1,33 @@
-// operator
-import { eq, gt, lt, ge, le } from './porter'
+/**
+ * @file funk.ts
+ * @author sy
+ * @desc Tt's a demo of using funk.ts. I mean, the real functions are in porter.ts as you see.
+ *       You can rearrange specific functions with specific names or alias and comments.
+ *       And I don't recommend you use it like me, because to keep a clean trace of callees.
+ *       I named all of them, will actually make the callstack deeper with nothing useful if
+ *       you don't need to or care about the debug tracing. I mean, it's a waste.
+ */
+
+// array
+import { head, tail, init, index, map, nums, last, reverse, append } from './porter'
 // compose
 import { compose } from 'src/porter'
 // curry
 // import { curry } from 'src/porter'
 // isType
-import { isArray, isFunction, isNumber, isString } from './porter'
-// array
-import { head, tail, init, index, map, nums, last, reverse } from './porter'
+import { isArray, isFunction, isNumber, isString, isBoolean, isObject } from './porter'
 // object
-import { named, prop, template } from './porter'
+import { named, prop, template, alias } from './porter'
+// operator
+import { eq, gt, lt, ge, le, add, trunc, between, betweenEq } from './porter'
 // placepholer
 import { _, replace } from './porter'
 
 
 export class F {
     public static _ = _
+
+
     /**
      * @sig eq :: a -> a -> boolean
      * @alias is
@@ -24,32 +36,39 @@ export class F {
     /** @alias eq */
     public static is = eq
 
+
     /**
      * @sig gt :: a -> a -> boolean
      */
     public static gt = gt
+
 
     /**
      * @sig lt :: a -> a -> boolean
      */
     public static lt = lt
 
+
     /**
      * @sig ge :: a -> a -> boolean
      */
     public static ge = ge
+
 
     /**
      * @sig le :: a -> a -> boolean
      */
     public static le = le
 
+
     public static op = { eq, gt, lt, ge, le }
+
 
     /**
      * @sig index :: [a] -> a
      */
     public static index = index
+
 
     /**
      * @sig head :: [a] -> a
@@ -57,7 +76,8 @@ export class F {
      */
     public static head = head
     /** @alias head */
-    public static car = head
+    public static car = alias('car')(head)
+
 
     /**
      * @sig tail :: [a] -> [a]
@@ -65,20 +85,24 @@ export class F {
      */
     public static tail = tail
     /** @alias tail */
-    public static cdr = tail
+    public static cdr = alias('cdr')(tail)
+
 
     /**
      * @sig last :: [a] -> a
      */
     public static last = last
 
+
     /**
-     * @sig init :: [a] -> [a]
+     * @example
+     *   const l = [1, 2, 3]
+     *   const l01 = init(l) // [0, 1]
      */
     public static init = init
 
+
     /**
-     * @sig nums :: n -> [n]
      * @example
      *   const a0 = nums(0) // []
      *   const a1 = nums(1) // [0]
@@ -86,50 +110,113 @@ export class F {
      */
     public static nums = nums
 
+
     /**
      * @sig map :: (a -> b) -> [a] -> [b]
      */
     public static map = map
+
 
     /**
      * @sig reverse :: (s -> s) | ([a] -> [a])
      */
     public static reverse = reverse
 
+
+    /**
+     * @alias push
+     */
+    public static append = append
+    /** @alias append */
+    public static push = alias('push')(append)
+
+
     /** reduce :: (b -> a -> b) -> a -> b */
     // public static reduce = reduce
 
+
     /**
-     * @sig isString :: a -> boolean
      * @alias isS
      */
     public static isString = isString
     /** @alias isString */
-    public static isS = isString
+    public static isS = alias('isS')(isString)
+
 
     /**
-     * @sig isFunction :: (a -> b) -> boolean
+     * @alias isBool
+     */
+    public static isBoolean = isBoolean
+    /** @alias isBoolean */
+    public static isBool = alias('isBool')(isBoolean)
+
+
+    /**
+     * @alias isObj
+     */
+    public static isObject = isObject
+    /** @alias isObject */
+    public static isObj = alias('isBool')(isObject)
+
+
+    /**
      * @alias isFN
      */
     public static isFunction = isFunction
     /** @alias isFunction */
-    public static isFN = isFunction
+    public static isFN = alias('isFN')(isFunction)
+
 
     /**
-     * @sig isArray :: [a] -> boolean
      * @alias isL
      */
     public static isArray = isArray
     /** @alias isArray */
-    public static isL = isArray
+    public static isL = alias('isL')(isArray)
+
 
     /**
-     * @sig isN :: n -> boolean
      * @alias isN
      */
     public static isNumber = isNumber
     /** @alias isNumber */
-    public static isN = isNumber
+    public static isN = alias('isN')(isNumber)
+
+
+    /**
+     * @example
+     *   const add3 = add(3)
+     *   const a = 2
+     *   const b = add3(a) // 5
+     */
+    public static add = add
+
+
+    /**
+     * @example
+     *   trunc(3.1) // 3
+     *   trunc(-3.1) // -3
+     *   trunc(0) // 0
+     */
+    public static trunc = trunc
+
+
+    /**
+     * @see betweenEq
+     * @example
+     *   const between0TAU = between(0, Math.PI * 2)
+     *   between0TAU(3) // 0 < 3 < 2Pi, true
+     */
+    public static between = between
+
+
+    /**
+     * @see between
+     * @example
+     *   const between0TAU = between(0, Math.PI * 2)
+     *   between0TAU(0) // 0 <= 0 <= 2Pi, true
+     */
+    public static betweenEq = betweenEq
 
 
     /**
