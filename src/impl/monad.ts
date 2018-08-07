@@ -5,7 +5,7 @@ export class Monad {
     public constructor () {
     }
 
-    public static bind (f: FN) {
+    public static bind (f: F) {
         //
     }
 }

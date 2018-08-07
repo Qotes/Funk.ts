@@ -22,7 +22,7 @@ export function isString (x: any): x is string {
  * @internal
  * @sig isFunction :: a -> boolean
  */
-export function isFunction<T extends FN<any>> (fn: any): fn is T {
+export function isFunction<T extends F<any>> (fn: any): fn is T {
     return fn && toString.call(fn) === '[object Function]'
 }
 

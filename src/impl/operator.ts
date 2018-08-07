@@ -7,13 +7,13 @@ import { curry, curry3, named, proped } from 'src/porter'
 
 export interface IOp {
     optag: string
-    <T> (m: T): FN1<T, boolean>
+    <T> (m: T): F1<T, boolean>
     <T> (m: T, n: T): boolean
 }
 
 const optaged = proped('optag')
 
-const OP = (name: string, optag: string, impl: FN) => named(name)(optaged(optag)(curry(impl))) as IOp
+const OP = (name: string, optag: string, impl: F) => named(name)(optaged(optag)(curry(impl))) as IOp
 
 
 export const eq = OP('eq', '===', (m: any, n: any) => m === n)

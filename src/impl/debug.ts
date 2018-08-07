@@ -10,7 +10,7 @@ import { IOp } from './operator'
  * @internal
  * @impure
  */
-export function checkArgsN (f: FN, n: number = 1, op: IOp) {
+export function checkArgsN (f: F, n: number = 1, op: IOp) {
     const tagMap = {
         '===': 'absolutely',
         '>': 'more than',
