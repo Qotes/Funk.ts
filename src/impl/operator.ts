@@ -115,3 +115,15 @@ export const between = named('between')(curry3((min: number, max: number, v: num
  * @sig betweenEq :: n -> n -> n -> bool
  */
 export const betweenEq = named('betweenEq')(curry3((min: number, max: number, v: number) => min <= v && v <= max))
+
+
+/**
+ * @sig identity :: a -> a
+ */
+export const identity = named('identity')(<T>(a: T): T => a)
+
+
+/**
+ * @sig constant :: () -> a
+ */
+export const constant = named('constant')(<R>(a: R): F0<R> => () => a)
