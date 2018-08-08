@@ -17,6 +17,8 @@ import { curry } from 'src/porter'
 export const f = curry(function f (...t) {
     // tricks ...
 })
+// or as named arrow function
+export const f2 = named('f2')((...t2) => /* trick */ )
 ```
 
 ### name
@@ -24,6 +26,12 @@ export const f = curry(function f (...t) {
 Could the function be written in a single line, I advise you use named to decorate a anonymous arrow function.
 
 In other circumstances, normal named functions would be better.
+
+As if you are sure about the function curried or composed, the call stack of the anonymous functions are not so vital as long as you named the result function.
+
+### length of arguments
+
+Function with more than 3 arguments are all __deprecated__. Though beside supported `F1`, `F2`, `F3` for unary, binary, ternary functions, there is a common `F` in `types.d.ts` for all other functions, remember that it's __deprecated__.
 
 ## comments
 
