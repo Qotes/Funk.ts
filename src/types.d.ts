@@ -6,6 +6,7 @@ declare interface IF {
 
 // n-ary
 declare type F<R = any> = ((...args: any[]) => R) & IF
+declare type F0<R = any> = () => R
 // unary
 declare type F1<T, R> = ((t: T) => R) & IF
 // binary
