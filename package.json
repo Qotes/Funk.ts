@@ -8,7 +8,7 @@
     "src"
   ],
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "tsc -p tsconfig.test.json && node scripts/test.js"
   },
   "repository": {
     "type": "git",
@@ -20,12 +20,13 @@
     "typescript"
   ],
   "author": "Sy",
-  "license": "ISC",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/Qotes/Funk.ts/issues"
   },
   "homepage": "https://github.com/Qotes/Funk.ts#readme",
   "devDependencies": {
+    "systemjs": "^0.21.4",
     "tslint-config-prettier": "^1.14.0",
     "typescript": "^3.0.1"
   }

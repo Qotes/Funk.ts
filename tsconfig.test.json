@@ -1,11 +1,17 @@
 {
   "compilerOptions": {
     "baseUrl": ".",
-    "rootDir": "src",
     "outDir": "dist",
+    "outFile": "dist/test.js",
+    "rootDirs": [
+      "src",
+      "test",
+      "scripts"
+    ],
+    "sourceRoot": "scripts",
     "lib": ["es6"],
     "target": "es5",
-    "module": "esnext",
+    "module": "system",
     "sourceMap": true,
     "allowJs": false,
     "allowSyntheticDefaultImports": true,
@@ -28,10 +34,9 @@
   },
   "exclude": [
     "node_modules",
-    "build",
     "scripts",
+    "build",
     "jest",
-    "src/setupTests.ts",
     "src/scripts"
   ]
 }

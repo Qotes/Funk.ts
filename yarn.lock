@@ -2,6 +2,10 @@
 # yarn lockfile v1
 
 
+systemjs@^0.21.4:
+  version "0.21.4"
+  resolved "https://registry.npmjs.org/systemjs/-/systemjs-0.21.4.tgz#043996efcac3fefcb7d62e8c40457a42e9c86e1e"
+
 tslint-config-prettier@^1.14.0:
   version "1.14.0"
   resolved "http://registry.npm.taobao.org/tslint-config-prettier/download/tslint-config-prettier-1.14.0.tgz#860b36634e53f4c70c64c51ff3ef7fd9bbab7676"

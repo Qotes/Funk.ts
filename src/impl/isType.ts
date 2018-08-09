@@ -44,7 +44,8 @@ export function isArray (array: any): array is any[] {
  * @sig isNumber :: a -> boolean
  */
 export function isNumber (n: any): n is number {
-    return !isNaN(n)
+    if (n === '') return false
+    return isArray(n) ? false : !isNaN(n)
 }
 
 
