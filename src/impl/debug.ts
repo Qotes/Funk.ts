@@ -1,4 +1,4 @@
-import { checkN } from 'src/porter'
+import { checkN, isFunction, isString, isObject, isArray } from 'src/porter'
 import { IOp } from './operator'
 
 // trace
@@ -10,7 +10,7 @@ import { IOp } from './operator'
  * @internal
  * @impure
  */
-export function checkArgsN (f: F, n: number = 1, op: IOp) {
+export function checkArgsN (f: F | ({length: N} & any), n: number = 1, op: IOp) {
     const tagMap = {
         '===': 'absolutely',
         '>': 'more than',
@@ -31,4 +31,29 @@ export function checkArgsN (f: F, n: number = 1, op: IOp) {
  */
 export function assert (cond: boolean, msg: string) {
     if (!cond) throw Error(msg)
+}
+
+
+/**
+ * @internal
+ * @sig :: a -> s
+ */
+export function inspect (x: any): string {
+    if (x && isFunction(x.inspect)) return x.inspect()
+
+    function inspectFn (f: F) {
+        return f.name ? f.name : f.toString()
+    }
+
+    function inspectTerm (t: any): string {
+        if (isString(t)) return `'${t}'`
+        if (isObject(t)) return `{${Object.keys(t).map(k => [k, inspect(t[k])]).map(kv => kv.join(': ')).join(', ')}}`
+        return String(t)
+    }
+
+    function inspectArgs (args: L | S | O) {
+      return isArray(args) ? `[${args.map(inspect).join(', ')}]` : inspectTerm(args)
+    }
+
+    return isFunction(x) ? inspectFn(x) : inspectArgs(x)
 }
