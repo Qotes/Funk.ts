@@ -1,6 +1,7 @@
 /**
  * @file interal type check
  * @desc use x is Type to support branches
+ * @warn this is the most basic functions, don't quote other files
  */
 
 

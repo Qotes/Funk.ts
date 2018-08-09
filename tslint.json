@@ -7,6 +7,9 @@
     ]
   },
   "rules": {
+    // /* tslint:disable[:rule1 rule2 rule3...] */
+    // // tslint:disable-next-line[:rule1 rule2 rule3...]
+    // // tslint:disable-line
     // "completed-docs": true,
     "align": true,
     "arrow-parens": [true, "ban-single-arg-parens"],
@@ -46,6 +49,9 @@
     "trailing-comma": false,
     "type-literal-delimiter": false,
     "typedef": false, // [true, "call-signature", "arrow-call-signature", "parameter", "arrow-parameter"],
-    "variable-name": [true, "ban-keywards", "check-format", "allow-leading-underscore", "allow-pascal-case"]
+    "variable-name": [true, "ban-keywards", "check-format", "allow-leading-underscore", "allow-pascal-case"], // "allow-trailing-underscore"
+    "naming-convention": [true, // @see https://github.com/palantir/tslint/issues/1605
+      {"type": "member", "modifiers": "private", "leadingUnderscore": null, "prefix": "__"}
+    ]
   }
 }

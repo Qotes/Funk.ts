@@ -1,4 +1,4 @@
-import { reverse } from 'src/porter'
+import { reverse, checkArgsN, ge } from 'src/porter'
 
 
 /**
@@ -19,16 +19,17 @@ import { reverse } from 'src/porter'
  *   const fc3 = compose(f3, f2, f1) // number -> number
  *   // actually fc3 is same to fc2
  */
-export function compose<T1, R1, R>         (fn2: FN1<R1, R>, fn1: FN1<T1, R1>): FN1<T1, R>
-export function compose<T1, T2, R1, R>     (fn2: FN1<R1, R>, fn1: FN2<T1, T2, R1>): FN2<T1, T2, R>
-export function compose<T1, T2, T3, R1, R> (fn2: FN1<R1, R>, fn1: FN3<T1, T2, T3, R1>): FN3<T1, T2, T3, R>
-export function compose<T1, R1, R2, R>         (fn3: FN1<R2, R>, fn2: FN1<R1, R2>, fn1: FN1<T1, R1>): FN1<T1, R>
-export function compose<T1, T2, R1, R2, R>     (fn3: FN1<R2, R>, fn2: FN1<R1, R2>, fn1: FN2<T1, T2, R1>): FN2<T1, T2, R>
-export function compose<T1, T2, T3, R2, R1, R> (fn3: FN1<R2, R>, fn2: FN1<R1, R2>, fn1: FN3<T1, T2, T3, R1>): FN3<T1, T2, T3, R>
-export function compose<R> (fn: FN<R>, ...fns: FN[]): FN<R>
-export function compose <R> (...fns: FN[]) {
-    // TODO: checkArgsN 1
-    const composed = fns.reduce((c, fn) => (...args: any[]) => fn(c(...args))) as FN<R>
+export function compose<R1, R>         (fn2: F1<R1, R>, fn1: F0<R1>): F0<R>
+export function compose<T1, R1, R>         (fn2: F1<R1, R>, fn1: F1<T1, R1>): F1<T1, R>
+export function compose<T1, T2, R1, R>     (fn2: F1<R1, R>, fn1: F2<T1, T2, R1>): F2<T1, T2, R>
+export function compose<T1, T2, T3, R1, R> (fn2: F1<R1, R>, fn1: F3<T1, T2, T3, R1>): F3<T1, T2, T3, R>
+export function compose<T1, R1, R2, R>         (fn3: F1<R2, R>, fn2: F1<R1, R2>, fn1: F1<T1, R1>): F1<T1, R>
+export function compose<T1, T2, R1, R2, R>     (fn3: F1<R2, R>, fn2: F1<R1, R2>, fn1: F2<T1, T2, R1>): F2<T1, T2, R>
+export function compose<T1, T2, T3, R2, R1, R> (fn3: F1<R2, R>, fn2: F1<R1, R2>, fn1: F3<T1, T2, T3, R1>): F3<T1, T2, T3, R>
+export function compose<R> (fn: F<R>, ...fns: F[]): F<R>
+export function compose <R> (...fns: F[]) {
+    checkArgsN(arguments, 1, ge)
+    const composed = fns.reduce((c, fn) => (...args: any[]) => fn(c(...args))) as F<R>
     composed.callees = reverse(fns).map(fn => fn.name)
 
     return composed
