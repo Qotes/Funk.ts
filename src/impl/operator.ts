@@ -1,9 +1,10 @@
+import { curry, curry3, named, proped } from 'src/porter'
+
 /**
  * specific functions for basic arithmetic calculation
  * or small logic things
  */
 
-import { curry, curry3, named, proped } from 'src/porter'
 
 export interface IOp {
     optag: string

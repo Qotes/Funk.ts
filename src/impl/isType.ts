@@ -24,7 +24,7 @@ export function isString (x: any): x is string {
  * @sig isFunction :: a -> boolean
  */
 export function isFunction<T extends F<any>> (fn: any): fn is T {
-    return fn && toString.call(fn) === '[object Function]'
+    return !!fn && toString.call(fn) === '[object Function]'
 }
 
 
@@ -44,7 +44,8 @@ export function isArray (array: any): array is any[] {
  * @sig isNumber :: a -> boolean
  */
 export function isNumber (n: any): n is number {
-    return !isNaN(n)
+    if (n === '') return false
+    return isArray(n) ? false : !isNaN(n)
 }
 
 

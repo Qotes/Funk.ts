@@ -2,7 +2,7 @@
  * @file array methods
  */
 
-import { curry, isString, named } from '../porter'
+import { curry, isString, named } from 'src/porter'
 
 
 export const index = named('index')(curry((n: number, l: any[]) => n < 0 ? l.slice(n)[0] : l[n])) as /** @interface */ {

@@ -1,4 +1,4 @@
-version: 0
+version: 2
 jobs:
   build:
     docker:
@@ -11,3 +11,28 @@ jobs:
       - run:
           name: Date
           command: date
+  test:
+    docker:
+      - image: circleci/node:8-stretch-browsers
+    steps:
+      - checkout
+      - restore_cache:
+          name: Restore Yarn Package Cache
+          keys:
+            - yarn-packages-{{ checksum "yarn.lock" }}
+      - run:
+          name: Install Dependencies
+          command: yarn
+      - save_cache:
+          name: Cache Yarn Package
+          key: yarn-packages-{{ checksum "yarn.lock" }}
+          paths:
+            - ~/.cache/yarn
+      - run:
+          name: Test
+          command: npm run ci
+workflows:
+  version: 2
+  test:
+    jobs:
+      - test

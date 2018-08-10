@@ -9,13 +9,13 @@ declare type valueof<T> = T[keyof T]
 // n-ary
 declare interface F<R = any> extends IF { (...args: any[]): R }
 // 0
-declare interface F0<R> extends F<R> { (): R }
+declare type F0<R> = (() => R) & IF
 // unary
-declare interface F1<T, R> extends F<R> { (t: T): R }
+declare type F1<T, R> = ((t: T) => R) & IF
 // binary
-declare interface F2<T1, T2, R> extends F<R> { (t1: T1, t2: T2): R }
+declare type F2<T1, T2, R> = ((t1: T1, t2: T2) => R) & IF
 // ternary
-declare interface F3<T1, T2, T3, R> extends F<R> { (t1: T1, t2: T2, t3: T3): R }
+declare type F3<T1, T2, T3, R> = ((t1: T1, t2: T2, t3: T3) => R) & IF
 
 declare type N = number
 

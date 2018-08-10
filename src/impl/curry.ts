@@ -1,3 +1,5 @@
+import { named } from 'src/impl/named'
+
 /**
  * @file curry function
  * @warnning be careful with the imported modules in this file
@@ -22,7 +24,6 @@
  *   curriedAdd(2)('3') // error
  */
 
-import { named } from '../porter'
 
 type Curried0<R> = R
 
