@@ -1,54 +1,58 @@
 import { isArray, isBoolean, isFunction, isNumber, isObject, isString } from 'src/impl/isType'
-import { assert } from 'src/impl/debug'
-import { failed } from './util'
 
-// function assert (cond: boolean, msg: string) {
-//     if (!cond) throw Error(msg)
-// }
+const [l, o, f, s, s2] = [[], {}, () => {},  '', '1']
+const [sl, so, sf, ss, ss2] = ['[]', '{}', '() => {}', '""', '"1"']
+const IS = (_f: F, p: any, _s: string) => test(`${_s} ${_f.name}`, () => expect(_f(p)).toBe(true))
+const NOT = (_f: F, p: any, _s: string) => test(`${_s} not ${_f.name}`, () => expect(_f(p)).toBe(false))
 
-export default function TisType () {
-    const [l, o, f] = [[], {}, () => {}]
-    const s = ''
+describe('isArray', () => {
+    test(sl + ' is array', () => expect(isArray(l)).toBe(true))
+    test(so + ' is not array', () => expect(isArray(o)).toBe(false))
+    test(sf + ' is not array', () => expect(isArray(f)).toBe(false))
+    test(ss + ' is not array', () => expect(isArray(s)).toBe(false))
+    test(ss2 + ' is not array', () => expect(isArray(s2)).toBe(false))
+})
 
-    const _T = (fn: F, p: any) => assert(fn(p), failed(f, p))
-    const _F = (fn: F, p: any) => assert(!fn(p), failed(f, p))
+describe('isBoolean', () => {
+    IS(isBoolean, true, 'true')
+    IS(isBoolean, false, 'fasle')
+    NOT(isBoolean, l, sl)
+    NOT(isBoolean, o, so)
+    NOT(isBoolean, f, sf)
+    NOT(isBoolean, s, ss)
+})
 
-    _T(isArray, l)
-    _F(isArray, o)
-    _F(isArray, f)
-    _F(isArray, s)
+describe('isFunction', () => {
+    IS(isFunction, f, sf)
+    NOT(isFunction, l, sl)
+    NOT(isFunction, o, so)
+    NOT(isFunction, s, ss)
+})
 
-    _T(isBoolean, true)
-    _T(isBoolean, false)
-    _F(isBoolean, l)
-    _F(isBoolean, o)
-    _F(isBoolean, f)
-    _F(isBoolean, s)
+describe(isNumber.name, () => {
+    IS(isNumber, 0, '0')
+    IS(isNumber, 1, '1')
+    IS(isNumber, Infinity, 'Infinity')
+    NOT(isNumber, l, sl)
+    NOT(isNumber, o, so)
+    NOT(isNumber, f, sf)
+    NOT(isNumber, s, ss)
+})
 
-    _T(isFunction, f)
-    _F(isFunction, l)
-    _F(isFunction, o)
-    _F(isFunction, s)
+describe(isObject.name, () => {
+    IS(isObject, o, so)
+    IS(isObject, f, sf)
+    IS(isObject, l, sl)
+    NOT(isObject, 0, '0')
+    NOT(isObject, 1, '1')
+    NOT(isObject, s, ss)
+})
 
-    _T(isNumber, 0)
-    _T(isNumber, 1)
-    _T(isNumber, Infinity)
-    _F(isNumber, l)
-    _F(isNumber, o)
-    _F(isNumber, f)
-    _F(isNumber, s)
-
-    _T(isObject, o)
-    _T(isObject, f)
-    _T(isObject, l)
-    _F(isObject, 0)
-    _F(isObject, 1)
-    _F(isObject, s)
-
-    _T(isString, s)
-    _F(isString, l)
-    _F(isString, o)
-    _F(isString, f)
-    _F(isString, 0)
-    _F(isString, 1)
-}
+describe(isString.name, () => {
+    IS(isString, s, ss)
+    NOT(isString, l, sl)
+    NOT(isString, o, so)
+    NOT(isString, f, sf)
+    NOT(isString, 0, '0')
+    NOT(isString, 1, '1')
+})

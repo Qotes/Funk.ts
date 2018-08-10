@@ -4,3 +4,8 @@
  */
 // toString
 export const failed = (f: F, ...ps: any[]) => `${f.name || f} failed with params ${ps}`
+
+export const o = {
+    name: 'Name',
+    attr: 'Attr'
+}

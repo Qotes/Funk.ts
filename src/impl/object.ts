@@ -1,4 +1,6 @@
-import { curry, curry3, isArray, isFunction, isObject } from 'src/porter'
+import { isArray, isFunction, isObject } from 'src/impl/isType'
+import { curry, curry3 } from 'src/impl/curry'
+import { named } from 'src/impl/named'
 
 
 /**
@@ -14,32 +16,6 @@ export const proped = curry3((attr: string, value: any, o: object) =>
         (attr: string, value: any): <T>(o: T) => T
         <T>(attr: string, value: any, o: T): T
     }
-
-
-/**
- * @raw
- * @sig named :: b -> a -> a
- * @internal
- * @impure / actually pure
- * @warn it's used by curry, so don't curry it with curry or functions curried
- *       like `const named = proped('name')` as `proped` is curried
- * @desc Change the name of an object forcely
- *       Be care that the named object is the same object inserted
- *       It could be used to keep the trace of callstack or check identities
- *       It's useful for composed or curried functions as anonymous functions
- *       are processed before implictly named
- * @example
- *       const f1 = x => x                      // f1.name = 'f1'
- *       const f2 = f1(x => x)                  // f2.name = ''
- *       const f3 = named('f3')(f2(f1(x => x))) // f3.name = 'f3'
- */
-export const named = ((value: string, o?: object) => o === undefined
-    ? (oo: object) => Object.defineProperty(oo, 'name', { value })
-    : Object.defineProperty(o, 'name', { value })
-) as /** @interface */ {
-    <T>(value: string, o: T): T
-    (value: string): <T>(o: T) => T
-}
 
 
 /**

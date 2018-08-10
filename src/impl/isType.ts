@@ -24,7 +24,7 @@ export function isString (x: any): x is string {
  * @sig isFunction :: a -> boolean
  */
 export function isFunction<T extends F<any>> (fn: any): fn is T {
-    return fn && toString.call(fn) === '[object Function]'
+    return !!fn && toString.call(fn) === '[object Function]'
 }
 
 
