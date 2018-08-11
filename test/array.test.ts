@@ -38,6 +38,7 @@ describe('reverse', () => {
     test('reverse', () => expect(reverse(l)[0]).toBe(l[l.length - 1]))
     test('reverse', () => expect(reverse(l)[l.length - 1]).toBe(l[0]))
     test('reverse', () => expect(reverse(l).length).toBe(l.length))
+    test('reverse string', () => expect(reverse('abc')).toBe('cba'))
 })
 
 describe('append', () => {
