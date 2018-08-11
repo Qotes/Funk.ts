@@ -8,6 +8,7 @@
     "src"
   ],
   "scripts": {
+    "build": "tsc -p tsconfig.prod.json",
     "test": "jest",
     "ci": "jest --maxWorkers=4 --coverage && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js"
   },

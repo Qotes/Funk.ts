@@ -11,6 +11,9 @@ jobs:
       - run:
           name: Date
           command: date
+      - run:
+          name: Run tsc
+          command: npm run build
   test:
     docker:
       - image: circleci/node:8-stretch-browsers

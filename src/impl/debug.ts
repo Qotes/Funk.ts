@@ -1,5 +1,5 @@
-import { checkN, isFunction, isString, isObject, isArray } from 'src/porter'
-import { IOp } from './operator'
+import { isFunction, isString, isObject, isArray } from 'src/impl/isType'
+import { checkN, IOp, ge } from './operator'
 
 // trace
 
@@ -10,7 +10,7 @@ import { IOp } from './operator'
  * @internal
  * @impure
  */
-export function checkArgsN (f: F | ({length: N} & any), n: number = 1, op: IOp) {
+export function checkArgsN (f: F | ({length: N} & any), op: IOp = ge, n: number = 1) {
     const tagMap = {
         '===': 'absolutely',
         '>': 'more than',
@@ -20,7 +20,7 @@ export function checkArgsN (f: F | ({length: N} & any), n: number = 1, op: IOp) 
     }
     assert(
         checkN(f.length, op, n),
-        `${f.name} expects ${tagMap[op.optag] || ''} ${n} argument${n > 1 ? 's' : ''}, found ${f.length}.`
+        `${f.name || 'anonymous'} expects ${tagMap[op.optag] || ''} ${n} argument${n > 1 ? 's' : ''}, found ${f.length}.`
     )
 }
 
@@ -35,6 +35,7 @@ export function assert (cond: boolean, msg: string) {
 
 
 /**
+ * @needtest
  * @internal
  * @sig :: a -> s
  */
