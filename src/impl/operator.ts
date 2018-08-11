@@ -1,6 +1,9 @@
-import { curry, curry3, named, proped } from 'src/porter'
+import { curry, curry3 } from 'src/impl/curry'
+import { proped } from 'src/impl/object'
+import { named } from 'src/impl/named'
 
 /**
+ * @needtest
  * specific functions for basic arithmetic calculation
  * or small logic things
  */

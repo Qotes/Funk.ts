@@ -1,4 +1,5 @@
-import { reverse, checkArgsN, ge } from 'src/porter'
+import { reverse, checkArgsN } from 'src/porter'
+import { named } from 'src/impl/named'
 
 
 /**
@@ -21,9 +22,9 @@ export function compose <T1, T2, R1, R2, R>     (fn3: F1<R2, R>, fn2: F1<R1, R2>
 export function compose <T1, T2, T3, R2, R1, R> (fn3: F1<R2, R>, fn2: F1<R1, R2>, fn1: F3<T1, T2, T3, R1>): F3<T1, T2, T3, R>
 export function compose <R> (...fns: F[]): F<R>
 export function compose <R> (...fns: F[]) {
-    checkArgsN(arguments, 1, ge)
+    checkArgsN(arguments)
     const composed = fns.reduce((c, fn) => (...args: any[]) => c(fn(...args))) as F<R>
-    composed.callees = reverse(fns).map(fn => fn.name)
+    composed.callees = reverse(fns).map(fn => fn.name || 'anonymous')
 
-    return composed
+    return named(`composed(${composed.callees.join(',')})`)(composed)
 }

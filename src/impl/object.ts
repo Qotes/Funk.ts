@@ -1,4 +1,4 @@
-import { isArray, isFunction, isObject } from 'src/impl/isType'
+import { isString, isFunction, isObject } from 'src/impl/isType'
 import { curry, curry3 } from 'src/impl/curry'
 import { named } from 'src/impl/named'
 
@@ -26,13 +26,11 @@ export const proped = curry3((attr: string, value: any, o: object) =>
  * @desc Produce a new object of an object with an alias
  *       The returned object is a whole new object, which differs from named
  *       It could be used to keep the trace of callstack or check identities
- * @warn it's used by curry, so don't curry it with curry or functions curried
- *       like `const named = proped('name')` as `proped` is curried
  */
 export function alias (value: string): <T>(o: T) => T
 export function alias <T> (value: string, o: T): T
 export function alias (value: string, o?: any) {
-    // TODO: check zero params
+    if (!arguments.length) throw Error('alias expects at least one argument')
     const _alias = (oo: any) => {
         if (!isObject(oo)) throw Error(`[alias]: no proper way to give an alias for non-object ${oo}`)
         if (isFunction(oo)) return named(value)(oo.bind({}))
@@ -60,11 +58,13 @@ export const prop = named('prop')(curry((attr: string, obj: object) => obj[attr]
 
 /**
  * @desc I don't think object.assign has anything to do with solid
- * @sig template :: [a] -> [b] -> c
- *                  a -> [b] -> a
+ * @deprecated it's too implicit
+ * @sig template :: [s|o] -> [a] -> c
  */
-export function template (keys: string[]): (...values: any[]) => object
-export function template<T = object> (parent: T): (...values: any[]) => T
-export function template (keys: string[] | object) {
-    return (...values: any[]) => (isArray(keys) ? keys : Object.keys(keys)).reduce((obj, key, i) => Object.assign(obj, { [key]: values[i] }), {})
+export function template (...keys: string[]): (...values: any[]) => object
+export function template <T extends object> (parent: T): (...values: any[]) => T
+export function template (...keys: L<S | O>) {
+    return (...values: any[]) => keys
+        .reduce((r: L, key: S | O) => isString(key) ? r.concat(key) : r.concat(Object.keys(key)), [])
+        .reduce((o: O, key: S, i) => Object.assign(o, { [key]: values[i] }), {})
 }

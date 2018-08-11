@@ -13,4 +13,3 @@ const hexToRgbS = compose(
 describe('compose', () => {
     test('hex transfer function', () => expect(hexToRgbS('#00eb2c')).toBe('rgb(0, 235, 44)'))
 })
-// TODO: to throw
