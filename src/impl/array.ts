@@ -49,6 +49,9 @@ export function nums (len: number) {
 }
 
 
+/**
+ * @sig reverse :: ([] -> []) | s -> s
+ */
 export function reverse (it: string): string
 export function reverse<T> (it: T[]): T[]
 export function reverse<T> (it: T[] | string) {

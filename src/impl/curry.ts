@@ -40,8 +40,6 @@ interface Curried3<T1, T2, T3, R> {
     (t1: T1, t2: T2, t3: T3): Curried0<R>
 }
 
-const ArgsError = (name: string) => `The curried ${name} expects at leat 1 arguments, found 0.`
-
 
 function curry0<R> (f: F<R>): Curried0<R> {
     return f()
@@ -51,7 +49,6 @@ function curry0<R> (f: F<R>): Curried0<R> {
 function curry1 <T1, R> (f: F1<T1, R>): Curried1<T1, R> {
     function curried (t1: T1): Curried0<R> {
         switch (arguments.length) {
-            case 0: throw Error(ArgsError(f.name))
             default: return curry0(() => f(t1))
         }
     }
@@ -64,7 +61,6 @@ export function curry2 <T1, T2, R> (f: F2<T1, T2, R>): Curried2<T1, T2, R> {
     function curried (t1: T1, t2: T2): Curried0<R>
     function curried (t1: T1, t2?: T2) {
         switch (arguments.length) {
-            case 0: throw Error(ArgsError(f.name))
             case 1: return curry1((t22: T2): R => f(t1, t22))
             default: return curry0(() => f(t1, t2 as T2))
         }
@@ -79,7 +75,6 @@ export function curry3 <T1, T2, T3, R> (f: F3<T1, T2, T3, R>): Curried3<T1, T2, 
     function curried (t1: T1, t2: T2, t3: T3): Curried0<R>
     function curried (t1: T1, t2?: T2, t3?: T3) {
         switch (arguments.length) {
-            case 0: throw Error(ArgsError(f.name))
             case 1: return curry2((t22: T2, t32: T3) => f(t1, t22, t32))
             case 2: return curry1((t32: T3) => f(t1, t2 as T2, t32))
             default: return curry0(() => f(t1, t2 as T2, t3 as T3))
