@@ -15,6 +15,8 @@ describe('alias', () => {
     test('aliased new function name', () => expect(alias('f2')(f).name).toBe('f2'))
     test('aliased old function name', () => expect((() => alias('f2')(f) && f)().name).toBe('f'))
     test('alias full', () => expect(alias('f2', () => {}).name).toBe('f2'))
+    test('alias full', () => expect(alias('f2', {name: ''}).name).toBe('f2'))
+    test('alias error', () => expect(() => alias('f2', true)).toThrow())
 })
 
 describe('template', () => {

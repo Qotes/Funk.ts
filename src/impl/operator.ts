@@ -4,6 +4,7 @@ import { named } from 'src/impl/named'
 
 /**
  * @needtest
+ * @notclear: considering change the order
  * specific functions for basic arithmetic calculation
  * or small logic things
  */
@@ -56,19 +57,35 @@ export const add = named('add')(curry((a: any, b: any) => a + b)) as /** @interf
 
 
 /**
- * @sig add :: a -> a -> a
+ * @sig subtract :: a -> a -> a
+ * @deprecated use add(a, -b) instead
+ */
+export const subtract = named('subtract')(curry((a: any, b: any) => a - b)) as /** @interface */ {
+    <T>(a: T, b: T): T
+    <T>(a: T): (b: T) => T
+}
+
+
+/**
+ * @sig add :: n -> n -> n
  */
 export const mul = named('add')(curry((a: number, b: number) => a * b))
 
 
 /**
- * @sig incr: a -> a
+ * @sig add :: n -> n -> n
+ * @deprecated use mul(a, 1 / b) instead
+ */
+export const division = named('division')(curry((a: number, b: number) => a / b))
+
+/**
+ * @sig incr: n -> n
  */
 export const incr = named('incr')(add(1))
 
 
 /**
- * @sig incr: a -> a
+ * @sig incr: n -> n
  */
 export const decr = named('decr')(add(-1))
 
@@ -85,11 +102,19 @@ export const trunc = named('trunc')((n: number) => n | 0)
 export const xor = named('xor')(curry((l: any, r: any) => l ^ r))
 
 
+// TODO: and / or
+
+
 /**
  * @sig whether :: a -> bool
  */
 export const whether = named('whether')((x: any) => !!x)
 
+
+/**
+ * @sig not :: a -> bool
+ */
+export const not = named('not')((x: any) => !x)
 
 /**
  * @sig ternary :: bool -> a -> a -> a

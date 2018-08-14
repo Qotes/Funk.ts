@@ -30,7 +30,6 @@ export const proped = curry3((attr: string, value: any, o: object) =>
 export function alias (value: string): <T>(o: T) => T
 export function alias <T> (value: string, o: T): T
 export function alias (value: string, o?: any) {
-    if (!arguments.length) throw Error('alias expects at least one argument')
     const _alias = (oo: any) => {
         if (!isObject(oo)) throw Error(`[alias]: no proper way to give an alias for non-object ${oo}`)
         if (isFunction(oo)) return named(value)(oo.bind({}))

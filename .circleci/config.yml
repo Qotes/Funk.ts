@@ -2,7 +2,7 @@ version: 2
 jobs:
   build:
     docker:
-      - image: debian:stretch
+      - image: circleci/node:8-stretch-browsers
     steps:
       - checkout
       - run:
@@ -11,14 +11,6 @@ jobs:
       - run:
           name: Date
           command: date
-      - run:
-          name: Run tsc
-          command: npm run build
-  test:
-    docker:
-      - image: circleci/node:8-stretch-browsers
-    steps:
-      - checkout
       - restore_cache:
           name: Restore Yarn Package Cache
           keys:
@@ -32,10 +24,25 @@ jobs:
           paths:
             - ~/.cache/yarn
       - run:
-          name: Test
+          name: Tsc build
+          command: npm run build
+      - run:
+          name: Jest test
           command: npm run ci
+  # test:
+  #   docker:
+  #     - image: circleci/node:8-stretch-browsers
+  #   steps:
+  #     - checkout
+  #     - run:
+  #         name: Test
+  #         command: npm run ci
+
 workflows:
   version: 2
-  test:
+  build_and_test:
     jobs:
-      - test
+      - build
+      # - test:
+      #     requires:
+      #       - build
