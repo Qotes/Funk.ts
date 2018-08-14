@@ -51,14 +51,25 @@ I sincerely do believe that using more than 3 params is a bad practice. So I'm n
 
 ## TODO
 
-NOTE: There's no need to hurry to implement some of the methods, focus more on reusable tools than common helpers.d
+NOTE: There's no need to hurry to implement some of the methods, focus more on reusable tools than common helpers.
 
 params number check
 
 arity
 
-refactor with named and proped
+logger/inspect system
 
-logger
+## proposal
 
-__TEST!!!__
+lazy filter
+
+```js
+l = [1, 2, 3]
+l.filter(i => i > 1).map(i => i + 1)
+```
+
+It will map the filtered array. Is there any way to suspend the filter until the function is called ?
+
+```js
+const f = compose(map(incr), filter(gt(1)))
+```
