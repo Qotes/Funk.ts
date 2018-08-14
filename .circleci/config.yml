@@ -24,24 +24,25 @@ jobs:
           paths:
             - ~/.cache/yarn
       - run:
-          name: Run tsc
+          name: Tsc build
           command: npm run build
-  test:
-    docker:
-      - image: circleci/node:8-stretch-browsers
-    steps:
-      - checkout
       - run:
-          name: Test
+          name: Jest test
           command: npm run ci
+  # test:
+  #   docker:
+  #     - image: circleci/node:8-stretch-browsers
+  #   steps:
+  #     - checkout
+  #     - run:
+  #         name: Test
+  #         command: npm run ci
+
 workflows:
   version: 2
   build_and_test:
     jobs:
       - build
-      - test:
-          requires:
-            - build
-          filters:
-            branches:
-              only: master
+      # - test:
+      #     requires:
+      #       - build
