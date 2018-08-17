@@ -42,10 +42,24 @@ export function isArray (array: any): array is any[] {
  * @raw
  * @internal
  * @sig isNumber :: a -> boolean
+ * @attention isNaN([]) === false
+ *            Number([]) === 0
+ *            Number([1]) === 1
+ *            Number([0, 1]) === NaN
+ *            Number({}) === NaN
+ *            Number('') === 0
+ *            Number('1') === 1
+ *            Number(true) === 1
+ *            Number(false) === 0
+ *            typeof NaN === 'number'
+ *            isNaN(NaN) === true
+ *            !!(NaN == NaN) == false
+ *            !!(NaN === NaN) === false
+ *            !!(0 === fasle) === fasle
+ *            !!(1 === true) === fasle
  */
 export function isNumber (n: any): n is number {
-    if (n === '') return false
-    return isArray(n) ? false : !isNaN(n)
+    return toString.call(n) === '[object Number]'
 }
 
 

@@ -3,8 +3,9 @@
  */
 
 import { curry } from 'src/impl/curry'
-import { isString } from 'src/impl/isType'
+import { isString, isObject, isFunction } from 'src/impl/isType'
 import { named } from 'src/impl/named'
+import { not } from 'src/impl/operator'
 
 
 export const index = named('index')(curry((n: number, l: any[]) => n < 0 ? l.slice(n)[0] : l[n])) as /** @interface */ {
@@ -32,12 +33,6 @@ export function last<T> (l: T[]) {
  */
 export function init<T> (l: T[]) {
     return l.slice(0, -1)
-}
-
-
-export const map = named('map')(curry((fn: (a: any) => any, l: any[]) => l.map(fn))) as /** @interface */ {
-    <T, R> (fn: (a: T) => R, l: T[]): R[]
-    <T, R> (fn: (a: T) => R): (l: T[]) => R[]
 }
 
 
@@ -78,9 +73,48 @@ export const append = named('append')(curry((v: any, l: any[]) => l.concat(v))) 
 // }
 
 
-// TODO: filter
+/**
+ * @sig filter :: f -> [a] -> [a]
+ */
+export const filter = named('filter')(curry((f: F<boolean>, l: L) => l.filter(f))) as /** @interface */ {
+    <T>(f: F<boolean>, l: T[]): T[]
+    (f: F<boolean>): <T>(l: T[]) => T[]
+}
 
-// const map = fn => rFn => (r, i) => rFn(r, fn(i))
+
+/**
+ * @sig without :: f -> [a] -> [a]
+ */
+export const without = named('without')(curry((f: F<boolean>, l: L) => l.filter(not(f)))) as /** @interface */ {
+    <T>(f: F<boolean>, l: T[]): T[]
+    (f: F<boolean>): <T>(l: T[]) => T[]
+}
+
+
+/**
+ * @needtest
+ * @todo type, composed processing
+ * @sig map :: f -> [a] -> [a]
+ */
+export const map = named('map')(curry((f: F, x: any) => {
+    if (x.map) return x.map(f)
+    if (isFunction(x)) return named(x.name)(curry((...args: any[]) => x(...args.map(f))))
+    if (isObject(x)) {
+        const o = {}
+        for (const k in x) { o[k] = f(x[k]) }
+        return o
+    }
+})) as /** @interface */ {
+    (f: F): (a: A) => A
+    <T, R> (f: F1<T, R>, l: T[]): R[]
+    <T, R> (f: F1<T, R>): (l: T[]) => R[]
+    <R> (f: F<R>, o: O): O
+    <R> (f: F<R>): (o: O) => O
+    <T extends F> (f: F, f2: T): T
+    (f: F): <T extends F> (f2: T) => T
+    (f: F, a: A): A
+    // TODO: functor
+}
 
 
 // TODO: transduce

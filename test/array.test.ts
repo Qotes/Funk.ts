@@ -1,4 +1,4 @@
-import { index, head, tail, last, init, map, nums, reverse, append } from 'src/impl/array'
+import { index, head, tail, last, init, map, nums, reverse, append, filter, without } from 'src/impl/array'
 import { l } from './util'
 
 describe('index', () => {
@@ -25,7 +25,20 @@ describe('init', () => {
 })
 
 describe('map', () => {
-    test('map', () => expect(map(_ => 'm')(l)[0]).toBe('m'))
+    test('map array', () => expect(map(_ => 'm')(l)[0]).toBe('m'))
+    class Mappable {
+        public constructor (public v: any) {}
+        public map (f: F) {
+            this.v = f(this.v)
+            return this
+        }
+    }
+    const mappable = new Mappable(1)
+    test('map mappable', () => expect(map((a: N) => a + 1)(mappable).v).toBe(2))
+    const ooo = {a: 1}
+    test('map object', () => expect(map((a: N) => a + 1)(ooo).a).toBe(2))
+    const fff = (a: N) => a + 1
+    test('map function', () => expect(map(fff)(fff)(0)).toBe(2))
 })
 
 describe('nums', () => {
@@ -43,4 +56,12 @@ describe('reverse', () => {
 
 describe('append', () => {
     test('append', () => expect(append(3)(l as any)[l.length]).toBe(3))
+})
+
+describe('filter', () => {
+    test('filter', () => expect(filter((a: N) => a > 1)([1, 2, 3])).toEqual([2, 3]))
+})
+
+describe('without', () => {
+    test('without', () => expect(without((a: N) => a > 1)([1, 2, 3])).toEqual([1]))
 })

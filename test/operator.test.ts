@@ -84,6 +84,8 @@ describe('whether', () => {
 describe('not', () => {
     test('not true = false', () => expect(not(true)).toBe(false))
     test('not false = true', () => expect(not(false)).toBe(true))
+    test('not function', () => expect(not(eq(1, 2))).toBe(true))
+    test('not function', () => expect(not(eq)(1, 2)).toBe(true))
 })
 
 describe('ternary', () => {
