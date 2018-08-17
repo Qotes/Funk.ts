@@ -29,7 +29,7 @@ export function checkArgsN (f: F | ({length: N} & any), op: IOp = ge, n: number 
  * @internal
  * @impure
  */
-export function assert (cond: boolean, msg: string) {
+export function assert (cond: boolean, msg: string): void | never {
     if (!cond) throw Error(msg)
 }
 

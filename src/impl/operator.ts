@@ -1,6 +1,7 @@
 import { curry, curry3 } from 'src/impl/curry'
 import { proped } from 'src/impl/object'
 import { named } from 'src/impl/named'
+import { isFunction } from 'src/impl/isType'
 
 /**
  * @needtest
@@ -113,8 +114,15 @@ export const whether = named('whether')((x: any) => !!x)
 
 /**
  * @sig not :: a -> bool
+ *             a -> bool -> a -> bool
  */
-export const not = named('not')((x: any) => !x)
+// export const not = named('not')((x: any) => !x)
+export function not <T extends F<boolean> | boolean> (xf: T): T
+export function not (xf: boolean | F<boolean>) {
+    if (isFunction(xf)) return named(xf.name)((...args: any[]) => not((xf)(...args)))
+    return !xf
+}
+
 
 /**
  * @sig ternary :: bool -> a -> a -> a
