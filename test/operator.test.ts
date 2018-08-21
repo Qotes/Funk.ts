@@ -11,6 +11,7 @@ describe('eq, ne, gt, lt, ge, lt',  () => {
     test('1 not eq 0', () => expect(eq(1, 0)).toBe(false))
     test('1 eq 1', () => expect(eq(1, 1)).toBe(true))
     test('"1" eq "1"', () => expect(eq('1', '1')).toBe(true))
+    test('NaN not eq NaN', () => expect(eq(NaN, NaN)).toBe(false))
 
     test('0 not ne 0', () => expect(ne(0, 0)).toBe(false))
     test('1 ne 0', () => expect(ne(1, 0)).toBe(true))
