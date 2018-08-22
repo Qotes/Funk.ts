@@ -10,7 +10,8 @@ describe('assert',  () => {
 describe('check arguments length', () => {
     test('proper length 0', () => expect(checkArgsN(f[0], eq, 0)).toBeUndefined())
     test('proper length 1', () => expect(checkArgsN(f[1], eq, 1)).toBeUndefined())
-    test('wrong length', () => expect(() => checkArgsN(f[0], ge, 1)).toThrow())
+    test('wrong length', () => expect(() => checkArgsN(f[0])).toThrow())
+    test('wrong length 2', () => expect(() => checkArgsN(f[2], ge, 3)).toThrow())
 })
 
 describe('inspect', () => {

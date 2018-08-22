@@ -22,6 +22,15 @@ const optaged = proped('optag')
 const OP = (name: string, optag: string, impl: F) => named(name)(optaged(optag)(curry(impl))) as IOp
 
 
+/**
+ * @desc Equality is based on the "SameValueZero" algorithm: NaN is considered the
+ *       same as NaN (even though NaN !== NaN) and all other values are considered
+ *       equal according to the semantics of the === operator. In the current
+ *       ECMAScript specification -0 and +0 are considered equal, although this was
+ *       not so in earlier drafts.
+ *       @ref https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map
+ *       But this function just applies the semantics of the === operator.
+ */
 export const eq = OP('eq', '===', (m: any, n: any) => m === n)
 
 

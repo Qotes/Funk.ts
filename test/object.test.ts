@@ -1,9 +1,15 @@
-import { prop, proped, alias, template } from 'src/impl/object'
+import { prop, props, proped, alias, template } from 'src/impl/object'
 import { o } from './util'
 
 describe('prop', () => {
     test('prop attr', () => expect(prop('attr', o)).toBe(o.attr))
     test('prop attr curried', () => expect(prop('attr')(o)).toBe(o.attr))
+})
+
+describe('props', () => {
+    test('props attr', () => expect(props(['a', 'b', 'd'], {a: 2}).a).toBe(2))
+    test('props attr curried', () => expect(props(['a', 'b', 'd'])({a: 2}).a).toBe(2))
+    test('props attr curried', () => expect(props(['b', 'd'])({a: 2}).a).toBe(undefined))
 })
 
 describe('proped', () => {
