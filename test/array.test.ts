@@ -33,12 +33,13 @@ describe('map', () => {
             return this
         }
     }
+    const m = (a: N) => a + 1
     const mappable = new Mappable(1)
-    test('map mappable', () => expect(map((a: N) => a + 1)(mappable).v).toBe(2))
+    test('map mappable', () => expect(map(m)(mappable).v).toBe(2))
     const ooo = {a: 1}
-    test('map object', () => expect(map((a: N) => a + 1)(ooo).a).toBe(2))
-    const fff = (a: N) => a + 1
-    test('map function', () => expect(map(fff)(fff)(0)).toBe(2))
+    test('map object', () => expect(map(m)(ooo).a).toBe(2))
+    test('map function', () => expect(map(m)(m)(0)).toBe(2))
+    test('map unmappable', () => expect(map(m)(true)).toBe(true))
 })
 
 describe('nums', () => {

@@ -104,6 +104,7 @@ export const map = named('map')(curry((f: F, x: any) => {
         for (const k in x) { o[k] = f(x[k]) }
         return o
     }
+    return x
 })) as /** @interface */ {
     (f: F): (a: A) => A
     <T, R> (f: F1<T, R>, l: T[]): R[]
