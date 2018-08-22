@@ -120,3 +120,12 @@ export const map = named('map')(curry((f: F, x: any) => {
 // TODO: transduce
 
 // TODO: take
+
+
+/**
+ * @deprecated maybe uncessary in typescript
+ * @sig unary :: f -> f
+ */
+// export function unary <T, R> (f: F1<T, R> | F2<T, A, R>| F3<T, A, A, R> | F<R>) {
+//     return named(f.name)((arg: T) => f(arg))
+// }
