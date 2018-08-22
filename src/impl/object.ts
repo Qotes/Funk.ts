@@ -55,6 +55,17 @@ export const prop = named('prop')(curry((attr: string, obj: object) => obj[attr]
     <R>(attr: string): (obj: any) => R | undefined
 }
 
+
+/**
+ * @desc Reflect.set will internally raise a TypeError if it returns false
+ * @sig props :: a -> s -> b
+ * @see prop
+ */
+export const props = named('props')(curry((attrs: S[], obj: O) => attrs.reduce((o: O, s: string) => Reflect.has(obj, s) ? Reflect.set(o, s, obj[s]) && o : o, {}))) as /** @interface */ {
+    <T>(attr: S[], obj: T): Partial<T>
+    (attr: S[]): <T>(obj: T) => Partial<T> | never
+}
+
 /**
  * @desc I don't think object.assign has anything to do with solid
  * @deprecated it's too implicit
