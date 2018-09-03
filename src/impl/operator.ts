@@ -177,7 +177,6 @@ export const constant = named('constant')(<R>(a: R): F0<R> => () => a)
 
 
 /**
- * @needtest mod(-3)(2) = -1 / mod(2)(-3) = 1
  * @desc mod(+2) -> -> 0 / 1
  *       mod(-3) -> -> 0 / -1 / -2
  * @sig mod :: n -> n -> n
