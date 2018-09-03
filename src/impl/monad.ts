@@ -4,6 +4,7 @@ interface IMappable<T> {
     __value__: T | F<T>
     map <R> (f: F1<T, R>): IMappable<R> | IO<R>
 }
+export type Mappable <T = any> = IMappable<T>
 
 
 /**
