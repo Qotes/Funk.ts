@@ -28,7 +28,7 @@ const OP = (name: string, optag: string, impl: F) => named(name)(optaged(optag)(
  *       equal according to the semantics of the === operator. In the current
  *       ECMAScript specification -0 and +0 are considered equal, although this was
  *       not so in earlier drafts.
- *       @ref https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map
+ * @ref https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map
  *       But this function just applies the semantics of the === operator.
  */
 export const eq = OP('eq', '===', (m: any, n: any) => m === n)
@@ -51,7 +51,7 @@ export const le = OP('le', '<=', (m: any, n: any) => m <= n)
 
 /**
  * @internal
- * @sig :: IOp: o => a -> o -> a -> bool
+ * @sig checnN :: Op o => a -> o -> a -> bool
  */
 export const checkN = named('checkN')(curry3((m: any, o: IOp, n: any) => o(m, n)))
 
@@ -77,16 +77,17 @@ export const subtract = named('subtract')(curry((a: any, b: any) => a - b)) as /
 
 
 /**
- * @sig add :: n -> n -> n
+ * @sig add :: Num n => n -> n -> n
  */
 export const mul = named('add')(curry((a: number, b: number) => a * b))
 
 
 /**
- * @sig add :: n -> n -> n
+ * @sig add :: Num n => n -> n -> n
  * @deprecated use mul(a, 1 / b) instead
  */
 export const division = named('division')(curry((a: number, b: number) => a / b))
+
 
 /**
  * @sig incr: n -> n
@@ -112,7 +113,7 @@ export const trunc = named('trunc')((n: number) => n | 0)
 export const xor = named('xor')(curry((l: any, r: any) => l ^ r))
 
 
-// TODO: and / or
+// TODO: and / or, maybe implement with Maybe Monad
 
 
 /**
@@ -173,3 +174,15 @@ export const identity = named('identity')(<T>(a: T): T => a)
  * @sig constant :: () -> a
  */
 export const constant = named('constant')(<R>(a: R): F0<R> => () => a)
+
+
+/**
+ * @needtest mod(-3)(2) = -1 / mod(2)(-3) = 1
+ * @desc mod(+2) -> -> 0 / 1
+ *       mod(-3) -> -> 0 / -1 / -2
+ * @sig mod :: n -> n -> n
+ */
+export const mod = named('mod')(curry((m: number, v: number) => (v % m + (m * v < 0 ? m : 0))))
+
+
+// TODO: flip
