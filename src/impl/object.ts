@@ -4,6 +4,12 @@ import { named } from 'src/impl/named'
 
 
 /**
+ * @file object read/write
+ * @desc the read should silently return undefined
+ *       but write properties should raise TypeError on non-object
+ */
+
+/**
  * @desc Set the property of an object forcely
  * @see prop
  */
@@ -46,9 +52,7 @@ export function alias (value: string, o?: any) {
  * @desc Get the property of an object
  *       The lookup types are not campable of getting a never-like property
  *       So you may give the expected type
- *       It's not so safe so we need monad here
  * @see proped
- * @todo monad: Maybe
  */
 export const prop = named('prop')(curry((attr: string, obj: object) => obj[attr])) as /** @interface */ {
     <T, K extends keyof T>(attr: K, obj: T): T[K]

@@ -5,7 +5,7 @@
  */
 
 
-const toString = Object.prototype.toString
+const toString = (a: A): S => Reflect.apply(Object.prototype.toString, a, [])
 
 
 /**
@@ -14,7 +14,7 @@ const toString = Object.prototype.toString
  * @sig isString :: a -> boolean
  */
 export function isString (x: any): x is string {
-    return toString.call(x) === '[object String]'
+    return toString(x) === '[object String]'
 }
 
 
@@ -24,7 +24,7 @@ export function isString (x: any): x is string {
  * @sig isFunction :: a -> boolean
  */
 export function isFunction<T extends F<any>> (fn: any): fn is T {
-    return !!fn && toString.call(fn) === '[object Function]'
+    return !!fn && toString(fn) === '[object Function]'
 }
 
 
@@ -59,7 +59,7 @@ export function isArray (array: any): array is any[] {
  *            !!(1 === true) === fasle
  */
 export function isNumber (n: any): n is number {
-    return toString.call(n) === '[object Number]'
+    return toString(n) === '[object Number]'
 }
 
 
@@ -69,7 +69,7 @@ export function isNumber (n: any): n is number {
  * @sig isBoolean :: a -> boolean
  */
 export function isBoolean (b: any): b is boolean {
-    return b === true || b === false || toString.call(b) === '[object Boolean]'
+    return b === true || b === false || toString(b) === '[object Boolean]'
 }
 
 

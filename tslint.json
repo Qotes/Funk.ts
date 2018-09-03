@@ -1,5 +1,5 @@
 {
-  "extends": ["tslint:recommended", "tslint-config-prettier"],
+  "extends": ["tslint:recommended", "tslint-no-circular-imports"],
   "linterOptions": {
     "exclude": [
       "config/**/*.js",
@@ -13,6 +13,8 @@
     // "completed-docs": true,
     "align": true,
     "arrow-parens": [true, "ban-single-arg-parens"],
+    "arrow-return-shorthand": true,
+    "array-type": [true, "array-simple"],
     "curly": false,
     "forin": false,
     "interface-name": false,

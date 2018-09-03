@@ -6,12 +6,16 @@ import { curry } from 'src/impl/curry'
 import { isString, isObject, isFunction } from 'src/impl/isType'
 import { named } from 'src/impl/named'
 import { not } from 'src/impl/operator'
+import { Mappable } from 'src/impl/monad'
 
 
 export const index = named('index')(curry((n: number, l: any[]) => n < 0 ? l.slice(n)[0] : l[n])) as /** @interface */ {
     <T> (n: number, l: T[]): T
     <T> (n: number): (l: T[]) => T
 }
+
+
+// TODO: take, elem/includes,
 
 
 export function head<T> (l: T[]) {
@@ -95,28 +99,22 @@ export const without = named('without')(curry((f: F<boolean>, l: L) => l.filter(
  * @needtest
  * @todo type, composed processing
  * @sig map :: f -> [a] -> [a]
+ * @see monad.fmap
  */
-export const map = named('map')(curry((f: F, x: any) => {
-    if (x.map) return x.map(f)
-    if (isFunction(x)) return named(x.name)(curry((...args: any[]) => x(...args.map(f))))
-    if (isObject(x)) {
-        const o = {}
-        for (const k in x) { o[k] = f(x[k]) }
-        return o
-    }
-    return x
-})) as /** @interface */ {
+export const map = named('map')(curry((f: F, x: any) => isObject(x) && isFunction((x as Mappable).map) ? (x as Mappable).map(f) : f(x))) as /** @interface */ {
     (f: F): (a: A) => A
-    <T, R> (f: F1<T, R>, l: T[]): R[]
-    <T, R> (f: F1<T, R>): (l: T[]) => R[]
-    <R> (f: F<R>, o: O): O
-    <R> (f: F<R>): (o: O) => O
-    <T extends F> (f: F, f2: T): T
-    (f: F): <T extends F> (f2: T) => T
     (f: F, a: A): A
+    <T, R> (f: F1<T, R>, m: Mappable<T>): Mappable<R>
+    <T, R> (f: F1<T, R>): (m: Mappable<T>) => Mappable<R>
     // TODO: functor
 }
 
+
+/**
+ * @needtest
+ * @todo
+ */
+// export const find = named('find')(curry())
 
 // TODO: transduce
 

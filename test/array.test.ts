@@ -36,10 +36,9 @@ describe('map', () => {
     const m = (a: N) => a + 1
     const mappable = new Mappable(1)
     test('map mappable', () => expect(map(m)(mappable).v).toBe(2))
-    const ooo = {a: 1}
-    test('map object', () => expect(map(m)(ooo).a).toBe(2))
-    test('map function', () => expect(map(m)(m)(0)).toBe(2))
-    test('map unmappable', () => expect(map(m)(true)).toBe(true))
+    const o = {a: 1}
+    const m2 = (o2: any) => (o2 as any).a
+    test('map unmappable', () => expect(map(m2)(o)).toBe(1))
 })
 
 describe('nums', () => {

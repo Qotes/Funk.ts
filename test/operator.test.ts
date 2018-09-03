@@ -2,7 +2,8 @@ import {
     eq, ne, gt, lt, ge, le,
     checkN, add, subtract, mul, division, incr, decr,
     trunc, xor, whether, not, ternary,
-    clamp, between, betweenEq, identity, constant
+    clamp, between, betweenEq, identity, constant,
+    mod
 } from 'src/impl/operator'
 
 describe('eq, ne, gt, lt, ge, lt',  () => {
@@ -119,4 +120,13 @@ describe('identity', () => {
 
 describe('constant', () => {
     test('constant 1 = () => 1', () => expect(constant(1)()).toBe(1))
+})
+
+describe('mod', () => { //mod(-3)(2) = -1 / mod(2)(-3) = 1
+    test('mod -3 2 = -1', () => expect(mod(-3, 2)).toBe(-1))
+    test('mod -3 2 = -1 curried', () => expect(mod(-3)(2)).toBe(-1))
+    test('mod 2 -3 = 1', () => expect(mod(2, -3)).toBe(1))
+    test('mod 2 -3 = 1 curried', () => expect(mod(2, -3)).toBe(1))
+    test('mod 2 -0 = 0', () => expect(mod(2, -0)).toBe(0))
+    test('mod -0 2 = 0', () => expect(mod(-0, 2)).toBeNaN())
 })

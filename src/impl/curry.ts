@@ -102,5 +102,3 @@ function curryN <R> (f: (...args: any[]) => R) {
 
 
 export const curry = curryN
-
-// export const curry = curry2

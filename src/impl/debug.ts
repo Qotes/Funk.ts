@@ -28,6 +28,7 @@ export function checkArgsN (f: F | ({length: N} & any), op: IOp = ge, n: number 
 /**
  * @internal
  * @impure
+ * @todo typeguard
  */
 export function assert (cond: boolean, msg: string): void | never {
     if (!cond) throw Error(msg)
