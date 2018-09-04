@@ -18,6 +18,7 @@ module.exports = {
     "collectCoverageFrom": [
         // "src/*.ts",
         "src/impl/*.ts",
-        "!test/util.ts"
+        "!test/util.ts",
+        '!test/debug.test.ts'
     ]
 }
