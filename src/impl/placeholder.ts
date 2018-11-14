@@ -7,6 +7,9 @@ export const _ = Symbol('F.PLA4H0LD2')
  * @todo
  * @needtest
  * @experimental
+ * @example
+ *     const f = F.gt(_, 2) // (n) => F.gt(n, 2)
+ *     f(5) // true
  */
 export function replace<R> (f: F<R>) {
     // return function replaced (...args: any[]) {

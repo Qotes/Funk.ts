@@ -1,5 +1,6 @@
 {
   "extends": "./tsconfig.json",
+  "outFile": "dist/index.js",
   "include": [
     "src"
   ]

@@ -13,14 +13,14 @@ import { named } from 'src/impl/named'
  * @desc Set the property of an object forcely
  * @see prop
  */
-export const proped = curry3((attr: string, value: any, o: object) =>
+export const proped = curry3((attr: PropertyKey, value: any, o: object) =>
     Object.defineProperty(o, attr, { value })) as /** @interface */ {
-        (attr: string): {
+        (attr: PropertyKey): {
             <T>(value: any, o: T): T
             (value: any): <T>(o: T) => T
         }
-        (attr: string, value: any): <T>(o: T) => T
-        <T>(attr: string, value: any, o: T): T
+        (attr: PropertyKey, value: any): <T>(o: T) => T
+        <T>(attr: PropertyKey, value: any, o: T): T
     }
 
 
@@ -53,6 +53,14 @@ export function alias (value: string, o?: any) {
  *       The lookup types are not campable of getting a never-like property
  *       So you may give the expected type
  * @see proped
+ * @example
+ *     const o = {a: 1, b: '2'}
+ *     // not curried will be looked up
+ *     prop('a', o) // number
+ *     prop('c', o) // error
+ *     // curried
+ *     const propa = prop<number>('a')
+ *     propa(o)
  */
 export const prop = named('prop')(curry((attr: string, obj: object) => obj[attr])) as /** @interface */ {
     <T, K extends keyof T>(attr: K, obj: T): T[K]
@@ -73,7 +81,18 @@ export const props = named('props')(curry((attrs: S[], obj: O) => attrs.reduce((
 /**
  * @desc I don't think object.assign has anything to do with solid
  * @deprecated it's too implicit
- * @sig template :: [s|o] -> [a] -> c
+ * @desc literal object template
+ *       It just supports a light way to compose objects, nothing more.
+ *       But it may help when you don't want to implement an interface with a class.
+ * @example
+ *    const person = template(['name', 'hobbies'])
+ *    const john = person('John', ['cycling', 'reading', 'coding'])
+ *    // it turns out {
+ *    //   name: 'John',
+ *    //   hobbies: ['cycling', 'reading', 'coding']
+ *    // }
+ *    const johnJunior = template(john)('John.Jr', ['anime'])
+ *    // though you can use an object as template, but it's unsafe and deprecated
  */
 export function template (...keys: string[]): (...values: any[]) => object
 export function template <T extends object> (parent: T): (...values: any[]) => T
