@@ -121,7 +121,10 @@ export const map = named('map')(curry((f: F, x: any) => isObject(x) && isFunctio
  * @needtest
  * @todo
  */
-// export const find = named('find')(curry())
+export const find = named('find')(curry(<T>(f: F1<T, boolean>, xs: L<T>) => xs.find(f))) as /** @interface */ {
+    <T>(f: F1<T, boolean>, xs: L<T>): T | undefined
+    <T>(f: F1<T, boolean>): (xs: L<T>) => T | undefined
+}
 
 // TODO: transduce
 
