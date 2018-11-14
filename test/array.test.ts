@@ -1,4 +1,8 @@
-import { index, head, tail, last, init, map, nums, reverse, append, filter, without } from 'src/impl/array'
+import {
+    index, head, tail, last, init,
+    map, find,
+    nums, reverse, append, filter, without
+} from 'src/impl/array'
 import { l } from './util'
 
 describe('index', () => {
@@ -64,4 +68,9 @@ describe('filter', () => {
 
 describe('without', () => {
     test('without', () => expect(without((a: N) => a > 1)([1, 2, 3])).toEqual([1]))
+})
+
+describe('find', () => {
+    test('find', () => expect(find(x => !(x + 1), [1, 2, 3])).toBe(undefined))
+    test('find curry', () => expect(find((x: N) => !!(x - 1))([1, 2, 3])).toBe(2))
 })

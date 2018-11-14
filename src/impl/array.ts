@@ -34,6 +34,9 @@ export function last<T> (l: T[]) {
 
 /**
  * @sig init :: [a] -> [a]
+ * @example
+ *   const l = [1, 2, 3]
+ *   const l01 = init(l) // [0, 1]
  */
 export function init<T> (l: T[]) {
     return l.slice(0, -1)
@@ -42,6 +45,10 @@ export function init<T> (l: T[]) {
 
 /**
  * @sig nums :: n -> [n]
+ * @example
+ *   const a0 = nums(0) // []
+ *   const a1 = nums(1) // [0]
+ *   const a3 = nums(3) // [0, 1, 2]
  */
 export function nums (len: number) {
     return [...Array(len).keys()]
@@ -114,7 +121,10 @@ export const map = named('map')(curry((f: F, x: any) => isObject(x) && isFunctio
  * @needtest
  * @todo
  */
-// export const find = named('find')(curry())
+export const find = named('find')(curry(<T>(f: F1<T, boolean>, xs: L<T>) => xs.find(f))) as /** @interface */ {
+    <T>(f: F1<T, boolean>, xs: L<T>): T | undefined
+    <T>(f: F1<T, boolean>): (xs: L<T>) => T | undefined
+}
 
 // TODO: transduce
 

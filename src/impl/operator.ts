@@ -52,6 +52,11 @@ export const le = OP('le', '<=', (m: any, n: any) => m <= n)
 /**
  * @internal
  * @sig checnN :: Op o => a -> o -> a -> bool
+ * @example n = 2, o = F.op.lt
+ *          f = F.checkN(1)
+ *          f(n) // 1 === 2  false
+ *          f(o)(n) // 1 < 2 true
+ *          F.checkN(n, 2) // 2 === 2 true
  */
 export const checkN = named('checkN')(curry3((m: any, o: IOp, n: any) => o(m, n)))
 
@@ -59,6 +64,10 @@ export const checkN = named('checkN')(curry3((m: any, o: IOp, n: any) => o(m, n)
 /**
  * @desc we are in ts world, so the added two params should be the same type, right ?
  * @sig add :: a -> a -> a
+ * @example
+ *   const add3 = add(3)
+ *   const a = 2
+ *   const b = add3(a) // 5
  */
 export const add = named('add')(curry((a: any, b: any) => a + b)) as /** @interface */ {
     <T>(a: T, b: T): T
@@ -103,6 +112,10 @@ export const decr = named('decr')(add(-1))
 
 /**
  * @sig trunc :: n -> n
+ * @example
+ *   trunc(3.1) // 3
+ *   trunc(-3.1) // -3
+ *   trunc(0) // 0
  */
 export const trunc = named('trunc')((n: number) => n | 0)
 
@@ -154,12 +167,20 @@ export const clamp = named('clamp')(curry3((min: number, max: number, v: number)
 
 /**
  * @sig between :: n -> n -> n -> bool
+ * @see betweenEq
+ * @example
+ *   const between0TAU = between(0, Math.PI * 2)
+ *   between0TAU(3) // 0 < 3 < 2Pi, true
  */
 export const between = named('between')(curry3((min: number, max: number, v: number) => min < v && v < max))
 
 
 /**
  * @sig betweenEq :: n -> n -> n -> bool
+ * @see between
+ * @example
+ *   const between0TAU = between(0, Math.PI * 2)
+ *   between0TAU(0) // 0 <= 0 <= 2Pi, true
  */
 export const betweenEq = named('betweenEq')(curry3((min: number, max: number, v: number) => min <= v && v <= max))
 

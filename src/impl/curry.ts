@@ -27,21 +27,23 @@ import { named } from 'src/impl/named'
 
 type Curried0<R> = R
 
-type Curried1<T1, R> = (t1: T1) => Curried0<R>
+interface Curried1 <T1, R> {
+    (t1: T1): Curried0<R>
+}
 
-interface Curried2<T1, T2, R> {
+interface Curried2 <T1, T2, R> {
     (t1: T1): Curried1<T2, R>
     (t1: T1, t2: T2): Curried0<R>
 }
 
-interface Curried3<T1, T2, T3, R> {
+interface Curried3 <T1, T2, T3, R> {
     (t1: T1): Curried2<T2, T3, R>
     (t1: T1, t2: T2): Curried1<T3, R>
     (t1: T1, t2: T2, t3: T3): Curried0<R>
 }
 
 
-function curry0<R> (f: F<R>): Curried0<R> {
+function curry0 <R> (f: F<R>): Curried0<R> {
     return f()
 }
 

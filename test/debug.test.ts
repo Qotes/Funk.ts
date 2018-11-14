@@ -17,7 +17,7 @@ describe('check arguments length', () => {
 describe('inspect', () => {
     test('inspect x.inspect', () => expect(inspect({inspect () {return 1}})).toBe(1))
     test('inspect function', () => expect(inspect(function name () {})).toBe('name'))
-    test('inspect anonymous', () => expect(inspect(() => {})).toBe('function () {}'))
+    test('inspect anonymous', () => expect(inspect(() => {})).toBe('function () { }'))
     test('inspect args', () => expect(inspect([])).toBe('[]'))
     test('inspect args', () => expect(inspect({})).toBe('{}'))
     test('inspect args', () => expect(inspect(true)).toBe('true'))

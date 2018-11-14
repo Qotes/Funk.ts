@@ -1,18 +1,24 @@
 {
   "compilerOptions": {
     "baseUrl": ".",
-    "rootDir": "src",
+    "rootDirs": [
+      "src",
+      "test"
+    ],
     "outDir": "dist",
     "lib": ["es6"],
     "target": "es5",
     "module": "esnext",
-    "sourceMap": true,
+    "sourceMap": false,
     "allowJs": false,
     "allowSyntheticDefaultImports": true,
+    "alwaysStrict": true,
+    // "declaration": true,
+    "noResolve": true,
+    // "diagnostics": true,
     "downlevelIteration": true,
     "moduleResolution": "node",
     "forceConsistentCasingInFileNames": true,
-    "alwaysStrict": true,
     "strict": true,
     "strictFunctionTypes": true,
     "noImplicitReturns": true,
