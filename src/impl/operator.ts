@@ -138,8 +138,10 @@ export const whether = named('whether')((x: any) => !!x)
 /**
  * @sig not :: a -> bool
  *             a -> bool -> a -> bool
+ * @example
+ *   f = not(not(eq)) // this is still linted as IOp in ts, awesome!
+ *   f(1, 2) // false
  */
-// export const not = named('not')((x: any) => !x)
 export function not <T extends F<boolean> | boolean> (xf: T): T
 export function not (xf: boolean | F<boolean>) {
     if (isFunction(xf)) return named(xf.name)((...args: any[]) => not((xf)(...args)))

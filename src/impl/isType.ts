@@ -1,7 +1,21 @@
 /**
  * @file interal type check
- * @desc use x is Type to support branches
  * @warn this is the most basic functions, don't quote other files
+ * @desc use x is Type to support branches
+ *       Why chose Object.prototype.toString to check ?
+ *       It's not about efficiency, it's about extensive and configurable.
+ *       You can never change the type signature of a name in JS.
+ * @example
+ *   function add (...xs) {
+ *     const _add = (..._xs) => add(...xs.concat(_xs))
+ *       _add[Symbol.toPrimitive] = () => xs.reduce((s, x) => s + x)
+ *     return _add
+ *   }
+ *   const n = add(1, 2, 4) // function, but works like a number
+ *   // What if I want isNumber(n) return ture ?
+ *   // Just configure toStringTag of the _add
+ *   // _add[Symbol.toStringTag] = 'Number'
+ *   // and you get (toString(1) == toString(add(1)))
  */
 
 
